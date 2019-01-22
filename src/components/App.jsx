@@ -36,6 +36,7 @@ class App extends React.Component {
       // success: alert()console.log('yay')
     })
     .done(function(data) {
+      $('.response').html(data)
       console.log(data)
     })
     .fail(function(data) {
@@ -47,7 +48,7 @@ class App extends React.Component {
     return (
        <div>
       <h2>Server Response:</h2>
-      <h2>Response goes here!</h2>
+      <h2 className='response'>Response goes here!</h2>
       <form onSubmit={this.handleSubmit}>
         <label>
           Name:
