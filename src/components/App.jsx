@@ -6,10 +6,9 @@ class App extends React.Component {
     super(props);
     this.state = {
       "name": '',
-      "message": ''
+      "message": '',
+      'response': 'Response goes here!'
     };
-    console.log(this.state)
-
     this.handleChangeName = this.handleChangeName.bind(this)
     this.handleChangeMessage = this.handleChangeMessage.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -33,22 +32,26 @@ class App extends React.Component {
       url: 'http://ec2-13-57-25-101.us-west-1.compute.amazonaws.com:3000/api/hrsf110/greeting',
       data: JSON.stringify(this.state),
       contentType: 'application/json',
-      // success: alert()console.log('yay')
+      success: function(data) {this.setState({response: data})
+        console.log('YAY IT WORKS');
+      }.bind(this),
+      error: function() {console.log('NOT WORKING');}
     })
-    .done(function(data) {
-      $('.response').html(data)
-      console.log(data)
-    })
-    .fail(function(data) {
-      console.log('FAIL YOU SUCK', data)
-    })
+    // .done(function(data) {
+    //   // $('.response').html(data)
+    //   this.setState({response:data})
+    //   console.log(data)
+    // }.bind(this))
+    // .fail(function(data) {
+    //   console.log('FAIL YOU SUCK', data)
+    // })
   };
 
   render() {
     return (
        <div>
       <h2>Server Response:</h2>
-      <h2 className='response'>Response goes here!</h2>
+      <h2>{this.state.response}</h2>
       <form onSubmit={this.handleSubmit}>
         <label>
           Name:
